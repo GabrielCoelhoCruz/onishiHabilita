@@ -6,7 +6,7 @@ test.describe('Landing Page - CNH do Brasil', () => {
   })
 
   test('homepage loads correctly', async ({ page }) => {
-    await expect(page).toHaveTitle(/Habilita/)
+    await expect(page).toHaveTitle(/CNH Fácil/)
     await expect(page.locator('body')).toBeVisible()
   })
 
@@ -56,13 +56,9 @@ test.describe('Landing Page - CNH do Brasil', () => {
     test('CTA button scrolls to form', async ({ page }) => {
       const ctaButton = page.locator('button:has-text("Quero minha CNH")').first()
       await ctaButton.click()
-      
-      // Aguarda o scroll
-      await page.waitForTimeout(500)
-      
-      // Verifica se o formulário está visível na viewport
+
       const formSection = page.locator('#formulario')
-      await expect(formSection).toBeVisible()
+      await expect(formSection).toBeInViewport()
     })
   })
 
@@ -128,16 +124,11 @@ test.describe('Landing Page - CNH do Brasil', () => {
     test('form validation shows errors for empty fields', async ({ page }) => {
       const form = page.locator('#formulario form')
       const submitButton = form.locator('button[type="submit"]')
-      
+
       await submitButton.click()
-      
-      // Aguarda validação
-      await page.waitForTimeout(300)
-      
-      // Verifica se há mensagens de erro
+
       const errorMessages = form.locator('.text-red-500')
-      const errorCount = await errorMessages.count()
-      expect(errorCount).toBeGreaterThan(0)
+      await expect(errorMessages.first()).toBeVisible()
     })
 
     test('form can fill name field', async ({ page }) => {
@@ -156,29 +147,19 @@ test.describe('Landing Page - CNH do Brasil', () => {
     test('form can select license type', async ({ page }) => {
       const licenseSelect = page.locator('button:has-text("Selecione a categoria")')
       await licenseSelect.click()
-      
-      // Aguarda o dropdown abrir
-      await page.waitForTimeout(300)
-      
-      // Seleciona uma opção
-      const option = page.locator('text=/Categoria B|Carro/').first()
-      if (await option.isVisible()) {
-        await option.click()
-      }
+
+      const option = page.getByRole('option', { name: /Categoria B|Carro/ })
+      await expect(option).toBeVisible()
+      await option.click()
     })
 
     test('form can select situation', async ({ page }) => {
       const situationSelect = page.locator('button:has-text("Selecione sua situação")')
       await situationSelect.click()
-      
-      // Aguarda o dropdown abrir
-      await page.waitForTimeout(300)
-      
-      // Seleciona uma opção
-      const option = page.locator('text=/Primeira Habilitação/').first()
-      if (await option.isVisible()) {
-        await option.click()
-      }
+
+      const option = page.getByRole('option', { name: /Primeira Habilitação/ })
+      await expect(option).toBeVisible()
+      await option.click()
     })
   })
 
@@ -243,16 +224,13 @@ test.describe('Landing Page - CNH do Brasil', () => {
 
   test.describe('Navigation', () => {
     test('can scroll to form section', async ({ page }) => {
-      // Scroll para o formulário
       await page.evaluate(() => {
         const form = document.getElementById('formulario')
         form?.scrollIntoView({ behavior: 'smooth' })
       })
-      
-      await page.waitForTimeout(500)
-      
+
       const formSection = page.locator('#formulario')
-      await expect(formSection).toBeVisible()
+      await expect(formSection).toBeInViewport()
     })
   })
 

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { toast } from 'sonner'
 import { insertLead } from '@/lib/supabase'
 import type { LicenseType, Situation, LeadInsert } from '@/types/lead'
 
@@ -104,6 +105,7 @@ export function useLeadForm() {
       return true
     } catch (error) {
       console.error('Error submitting lead:', error)
+      toast.error('Erro ao enviar cadastro. Tente novamente.')
       return false
     } finally {
       setIsSubmitting(false)

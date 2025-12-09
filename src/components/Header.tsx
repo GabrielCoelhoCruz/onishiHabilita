@@ -5,12 +5,12 @@ import { Car } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useSmoothScroll } from '@/hooks/useSmoothScroll'
 
-const navLinks = [
+const NAV_LINKS = [
   { href: 'o-que-mudou', label: 'O que mudou' },
   { href: 'como-funciona', label: 'Como funciona' },
   { href: 'diferenciais', label: 'Diferenciais' },
   { href: 'faq', label: 'Dúvidas' },
-]
+] as const
 
 export function Header() {
   const { scrollTo } = useSmoothScroll()
@@ -35,7 +35,7 @@ export function Header() {
           <span className="text-xl font-bold text-gray-900">CNH Fácil SP</span>
         </div>
         <nav className="hidden items-center gap-6 md:flex">
-          {navLinks.map((link) => (
+          {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={`#${link.href}`}

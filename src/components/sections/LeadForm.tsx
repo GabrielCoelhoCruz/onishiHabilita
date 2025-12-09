@@ -82,14 +82,14 @@ function LeadFormContent() {
       </div>
 
       <div>
-        <label className="mb-2 block text-sm font-medium text-gray-700">
+        <label htmlFor="license_type" className="mb-2 block text-sm font-medium text-gray-700">
           Qual habilitação você quer?
         </label>
         <Select
           value={formData.license_type}
           onValueChange={(value) => handleChange('license_type', value)}
         >
-          <SelectTrigger className={errors.license_type ? 'border-red-500' : ''}>
+          <SelectTrigger id="license_type" className={errors.license_type ? 'border-red-500' : ''}>
             <SelectValue placeholder="Selecione a categoria" />
           </SelectTrigger>
           <SelectContent>
@@ -106,14 +106,14 @@ function LeadFormContent() {
       </div>
 
       <div>
-        <label className="mb-2 block text-sm font-medium text-gray-700">
+        <label htmlFor="situation" className="mb-2 block text-sm font-medium text-gray-700">
           Qual sua situação atual?
         </label>
         <Select
           value={formData.situation}
           onValueChange={(value) => handleChange('situation', value)}
         >
-          <SelectTrigger className={errors.situation ? 'border-red-500' : ''}>
+          <SelectTrigger id="situation" className={errors.situation ? 'border-red-500' : ''}>
             <SelectValue placeholder="Selecione sua situação" />
           </SelectTrigger>
           <SelectContent>
